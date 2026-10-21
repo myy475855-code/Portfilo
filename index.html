@@ -8,11 +8,15 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-:root{color-scheme:dark;--bg:#080d16;--surface:#101827;--surface-2:#141f30;--line:rgba(158,183,220,.14);--text:#edf4ff;--muted:#9baac1;--accent:#69aaff;--accent-2:#9c8cff;--ok:#54d6ad;--accent-soft:rgba(105,170,255,.13);--mono:'JetBrains Mono',monospace;--sans:'Inter',system-ui,sans-serif;--display:'Space Grotesk',var(--sans);--radius:18px;--maxw:1040px;--ease:cubic-bezier(.22,1,.36,1);padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-:root[data-theme="light"]{color-scheme:light;--bg:#f3f7fc;--surface:#fff;--surface-2:#eaf0f8;--line:rgba(26,48,78,.12);--text:#14243b;--muted:#53657d;--accent:#1769d2;--accent-2:#644bd2;--ok:#087e60;--accent-soft:rgba(23,105,210,.10)}
+:root{color-scheme:dark;--bg:#04070d;--surface:#0d1522;--surface-2:#121c2d;--line:rgba(140,180,230,.14);--text:#edf4ff;--muted:#9baac1;--accent:#3aa0ff;--accent-2:#7c6cff;--ok:#54d6ad;--accent-soft:rgba(58,160,255,.13);--mono:'JetBrains Mono',monospace;--sans:'Inter',system-ui,sans-serif;--display:'Space Grotesk',var(--sans);--radius:18px;--maxw:1040px;--ease:cubic-bezier(.22,1,.36,1);padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+:root[data-theme="light"]{color-scheme:light;--bg:#eef4fb;--surface:#fff;--surface-2:#e6eef8;--line:rgba(26,48,78,.12);--text:#14243b;--muted:#53657d;--accent:#1769d2;--accent-2:#644bd2;--ok:#087e60;--accent-soft:rgba(23,105,210,.10)}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;scroll-padding-top:88px}
-body{margin:0;background:radial-gradient(ellipse at 12% 0%,color-mix(in srgb,var(--accent) 13%,transparent),transparent 34%),var(--bg);background-attachment:fixed;color:var(--text);font-family:var(--sans);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased;transition:background .35s,color .35s;animation:pageIn .6s ease both}
+body{margin:0;background:radial-gradient(ellipse 60% 45% at 88% 4%,rgba(0,190,255,.16),transparent 70%),radial-gradient(ellipse 55% 50% at 6% 58%,rgba(124,92,255,.15),transparent 70%),radial-gradient(ellipse 70% 40% at 50% 110%,rgba(58,160,255,.12),transparent 70%),var(--bg);background-attachment:fixed;color:var(--text);font-family:var(--sans);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased;transition:background .35s,color .35s;animation:pageIn .6s ease both}
+:root[data-theme="light"] body{background:radial-gradient(ellipse 60% 45% at 88% 4%,rgba(0,150,255,.14),transparent 70%),radial-gradient(ellipse 55% 50% at 6% 58%,rgba(124,92,255,.12),transparent 70%),var(--bg);background-attachment:fixed}
+body::after{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:64px 64px;-webkit-mask-image:radial-gradient(ellipse at 50% 40%,#000 0%,transparent 75%);mask-image:radial-gradient(ellipse at 50% 40%,#000 0%,transparent 75%);opacity:.55}
+body.loading{overflow:hidden}
+body.loading .hero-in{animation-play-state:paused}
 @keyframes pageIn{from{opacity:0}to{opacity:1}}
 ::selection{color:#fff;background:color-mix(in srgb,var(--accent) 72%,#263c68)}
 img{max-width:100%}
@@ -25,6 +29,22 @@ p{color:var(--muted);margin:0 0 12px}
 .progress-bar{position:fixed;top:env(safe-area-inset-top,0px);left:0;height:3px;width:0;background:linear-gradient(90deg,var(--accent),var(--accent-2));z-index:20}
 .wrap{position:relative;z-index:1;perspective:1300px;max-width:var(--maxw);margin:0 auto;padding:0 clamp(18px,4vw,32px)}
 .wrap-inner{max-width:var(--maxw);margin:0 auto;padding:0 clamp(18px,4vw,32px);width:100%}
+/* loader */
+#loader{position:fixed;inset:0;z-index:1000;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:26px;background:radial-gradient(circle at 50% 45%,rgba(58,160,255,.16),transparent 55%),#03060b;transition:opacity .7s ease,visibility .7s ease,transform .7s var(--ease)}
+:root[data-theme="light"] #loader{background:radial-gradient(circle at 50% 45%,rgba(23,105,210,.14),transparent 55%),#f3f7fc}
+#loader::before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(140,180,230,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(140,180,230,.07) 1px,transparent 1px);background-size:48px 48px;-webkit-mask-image:radial-gradient(circle at 50% 50%,#000,transparent 70%);mask-image:radial-gradient(circle at 50% 50%,#000,transparent 70%)}
+#loader.done{opacity:0;visibility:hidden;transform:scale(1.06);pointer-events:none}
+.ld-logo{position:relative;width:min(280px,64vw);height:auto;filter:drop-shadow(0 0 22px rgba(30,144,255,.45));animation:ldPulse 2.4s ease-in-out infinite}
+.ld-logo .stroke{fill:none;stroke:#7fc4ff;stroke-width:2;stroke-linejoin:round;stroke-dasharray:900;stroke-dashoffset:900;animation:ldDraw 1.4s ease forwards}
+.ld-logo .fill{opacity:0;animation:ldFill .8s ease 1s forwards}
+.ld-logo .p2 .stroke{animation-delay:.15s}.ld-logo .p3 .stroke{animation-delay:.3s}
+.ld-logo .p2 .fill{animation-delay:1.15s}.ld-logo .p3 .fill{animation-delay:1.3s}
+@keyframes ldDraw{to{stroke-dashoffset:0}}
+@keyframes ldFill{to{opacity:1}}
+@keyframes ldPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.035)}}
+.ld-meta{position:relative;display:flex;flex-direction:column;align-items:center;gap:10px;font-family:var(--mono);font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+.ld-bar{width:min(220px,50vw);height:3px;border-radius:3px;background:rgba(140,180,230,.16);overflow:hidden}
+.ld-bar i{display:block;height:100%;width:0;border-radius:3px;background:linear-gradient(90deg,#1e90ff,#7c6cff);transition:width .3s ease}
 /* topbar */
 .topbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;background:color-mix(in srgb,var(--bg) 80%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line);transition:box-shadow .3s}
 .topbar.scrolled{box-shadow:0 12px 36px -22px rgba(0,0,0,.75)}
@@ -60,7 +80,7 @@ section:last-of-type{border-bottom:none}
 .lede{max-width:48ch;margin-top:18px;font-size:clamp(15px,1.7vw,17px)}
 .hero-cta{display:flex;gap:12px;margin-top:24px;flex-wrap:wrap}
 .btn{font-family:var(--mono);font-size:13px;padding:11px 20px;border-radius:30px;border:1px solid var(--line);cursor:pointer;display:inline-block;transition:transform .15s,box-shadow .15s;touch-action:manipulation}
-.btn-primary{background:linear-gradient(115deg,#347fe0,var(--accent),#806fed);color:#fff;border-color:transparent;box-shadow:0 5px 0 color-mix(in srgb,var(--accent) 54%,#07101d),0 14px 26px -12px var(--accent)}
+.btn-primary{background:linear-gradient(115deg,#2a86e6,var(--accent),#806fed);color:#fff;border-color:transparent;box-shadow:0 5px 0 color-mix(in srgb,var(--accent) 54%,#07101d),0 14px 26px -12px var(--accent)}
 .btn-primary:hover{transform:translateY(-2px);text-decoration:none}
 .btn-primary:active{transform:translateY(3px);box-shadow:0 2px 0 color-mix(in srgb,var(--accent) 54%,#07101d)}
 .btn-ghost{background:var(--surface);color:var(--text);box-shadow:0 4px 0 var(--line)}
@@ -209,10 +229,34 @@ section{padding:68px 0}
 .reveal{transform:translateY(30px) rotateX(8deg)}
 .marquee-track{font-size:11px}}
 @media(max-width:380px){.btn{padding:10px 12px;font-size:11px}.card{padding:17px 15px}}
-@media(prefers-reduced-motion:reduce){*,*::before,*::after{transition-duration:.001ms!important;animation-duration:.001ms!important}html{scroll-behavior:auto}.reveal{transform:none}.hero-in{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{transition-duration:.001ms!important;animation-duration:.001ms!important}html{scroll-behavior:auto}.reveal{transform:none}.hero-in{opacity:1;transform:none}.ld-logo .stroke{stroke-dashoffset:0}.ld-logo .fill{opacity:1}}
 </style>
 </head>
-<body>
+<body class="loading">
+
+<!-- LOADER -->
+<div id="loader" role="status" aria-label="Loading portfolio">
+  <svg class="ld-logo" viewBox="60 130 390 220" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <linearGradient id="gGrey" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f4f6fa"/><stop offset=".6" stop-color="#cfd5df"/><stop offset="1" stop-color="#9aa3b2"/></linearGradient>
+      <linearGradient id="gBlue" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#27b4ff"/><stop offset=".55" stop-color="#1e8cff"/><stop offset="1" stop-color="#1a4fe0"/></linearGradient>
+    </defs>
+    <g class="p1">
+      <path class="fill" fill="url(#gGrey)" d="M80 148 L158 228 L205 188 L238 204 L238 318 L205 300 L205 238 L160 290 L112 236 L112 312 L80 296 Z"/>
+      <path class="stroke" d="M80 148 L158 228 L205 188 L238 204 L238 318 L205 300 L205 238 L160 290 L112 236 L112 312 L80 296 Z"/>
+    </g>
+    <g class="p2">
+      <path class="fill" fill="url(#gBlue)" d="M187 170 L327 170 L270 238 L270 306 L243 334 L243 238 Z"/>
+      <path class="stroke" d="M187 170 L327 170 L270 238 L270 306 L243 334 L243 238 Z"/>
+    </g>
+    <g class="p3">
+      <path class="fill" fill="url(#gGrey)" d="M310 196 L342 196 L365 232 L432 168 L366 256 L366 302 L334 326 L334 256 Z"/>
+      <path class="stroke" d="M310 196 L342 196 L365 232 L432 168 L366 256 L366 302 L334 326 L334 256 Z"/>
+    </g>
+  </svg>
+  <div class="ld-meta"><div class="ld-bar"><i id="ldBar"></i></div><span>Loading portfolio</span></div>
+</div>
+
 <div class="progress-bar" id="progressBar"></div>
 <div class="topbar">
   <div class="topbar-inner">
@@ -356,76 +400,447 @@ section{padding:68px 0}
 <script>
 const $ = id => document.getElementById(id);
 const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-const DATA = {
-  services: [
-    { category: "Web App Development", items: ["Full-stack Flask/Django apps", "Responsive front-ends", "Bug fixes & feature adds"] },
-    { category: "API Integration", items: ["Third-party API wiring", "OAuth / login flows", "REST API design"] },
-    { category: "Python Automation", items: ["File & data utilities", "Scripted workflows", "Small internal tools"] }
+
+/* ---------- LOGO LOADER ---------- */
+(function () {
+  const loader = $('loader'), bar = $('ldBar'), t0 = Date.now();
+  const MIN = reduce ? 400 : 2600, MAX = 6000;
+  let finished = false, pct = 0;
+  const tick = setInterval(() => { pct = Math.min(pct + (finished ? 14 : Math.random() * 6), finished ? 100 : 88); bar.style.width = pct + '%'; }, 120);
+  function close() {
+    if (loader.classList.contains('done')) return;
+    clearInterval(tick); bar.style.width = '100%';
+    setTimeout(() => {
+      loader.classList.add('done');
+      document.body.classList.remove('loading');
+      setTimeout(() => loader.remove(), 900);
+    }, 250);
+  }
+  function ready() { finished = true; setTimeout(close, Math.max(0, MIN - (Date.now() - t0))); }
+  if (document.readyState === 'complete') ready(); else addEventListener('load', ready);
+  setTimeout(close, MAX); // safety net if a CDN or font is slow
+})();
+
+const SITE_DATA = {
+  "services": [
+    {
+      "category": "Web App Development",
+      "items": [
+        "Full-stack Flask/Django apps",
+        "Responsive front-ends",
+        "Bug fixes & feature adds"
+      ]
+    },
+    {
+      "category": "API Integration",
+      "items": [
+        "Third-party API wiring",
+        "OAuth / login flows",
+        "REST API design"
+      ]
+    },
+    {
+      "category": "Python Automation",
+      "items": [
+        "File & data utilities",
+        "Scripted workflows",
+        "Small internal tools"
+      ]
+    }
   ],
-  skills: [
-    { category: "Programming", items: ["Python", "C++", "C#", "SQL"] },
-    { category: "Web Applications", items: ["HTML", "CSS", "JavaScript", "Flask", "Django", "Bootstrap"] },
-    { category: "Databases & Storage", items: ["MySQL", "SQLite", "PostgreSQL", "MongoDB"] },
-    { category: "APIs & Networking", items: ["JSON", "REST APIs", "API Integration", "OAuth"] },
-    { category: "Core Concepts", items: ["OOP", "Data Structures & Algorithms", "Database Concepts", "Visual Programming"] },
-    { category: "Automation & Scraping", items: ["Python Automation", "Selenium", "BeautifulSoup"] },
-    { category: "Tools & Design", items: ["Git", "GitHub", "VS Code", "PyCharm", "Figma"] }
+  "skills": [
+    {
+      "category": "Programming",
+      "items": [
+        "Python",
+        "C++",
+        "C#",
+        "SQL"
+      ]
+    },
+    {
+      "category": "Web Applications",
+      "items": [
+        "HTML",
+        "CSS",
+        "JavaScript",
+        "Flask",
+        "Django",
+        "Bootstrap"
+      ]
+    },
+    {
+      "category": "Databases & Storage",
+      "items": [
+        "MySQL",
+        "SQLite",
+        "PostgreSQL",
+        "MongoDB"
+      ]
+    },
+    {
+      "category": "APIs & Networking",
+      "items": [
+        "JSON",
+        "REST APIs",
+        "API Integration",
+        "OAuth"
+      ]
+    },
+    {
+      "category": "Core Concepts",
+      "items": [
+        "OOP",
+        "Data Structures & Algorithms",
+        "Database Concepts",
+        "Visual Programming"
+      ]
+    },
+    {
+      "category": "Automation & Scraping",
+      "items": [
+        "Python Automation",
+        "Selenium",
+        "BeautifulSoup"
+      ]
+    },
+    {
+      "category": "Tools & Design",
+      "items": [
+        "Git",
+        "GitHub",
+        "VS Code",
+        "PyCharm",
+        "Figma"
+      ]
+    }
   ],
-  experience: [
-    { date: "2024 · Faisalabad", title: "Front-End & API Developer, NutriWell", sub: "Front-end interfaces and API integration while studying." },
-    { date: "2024 · Faisalabad", title: "Web Developer Intern, Bug Resolver", sub: "Six-month web development internship and training program." }
+  "experience": [
+    {
+      "date": "2026 · Remote",
+      "title": "Full Stack Web Development (Django) Intern, Internee.pk",
+      "sub": "Built and maintained web applications using Python, Django, HTML, CSS, JavaScript and a relational database. Developed backend features such as models, views, authentication and REST APIs, and created responsive frontend interfaces. Gained hands-on experience with Git/GitHub, debugging and the full development lifecycle, completing assigned projects within deadlines while collaborating with mentors and fellow interns.",
+      "url": "https://www.internee.pk/dashboard/certificate?email=myy502388%40gmail.com"
+    },
+    {
+      "date": "2024 · Faisalabad",
+      "title": "Web Developer Intern, Bug Resolver",
+      "sub": "Six-month web development internship and training program."
+    }
   ],
-  education: [
-    { icon: "🎓", date: "2024 — Present · Faisalabad", title: "BS in Computer Science", sub: "The University of Faisalabad (TUF) · GPA 3.31/4" },
-    { icon: "📘", date: "2022 — 2024 · Faisalabad", title: "Intermediate — ICS", sub: "Aspire College, Kurrianwala · Score 740/1200" },
-    { icon: "💻", date: "Harvard (edX) · Online", title: "CS50x: Introduction to Computer Science", sub: "Harvard University · Certificate earned" },
-    { icon: "🐍", date: "Harvard (edX) · Online", title: "CS50P: Introduction to Programming with Python", sub: "Harvard University · Certificate earned" }
+  "education": [
+    {
+      "icon": "🎓",
+      "date": "2024 — Present · Faisalabad",
+      "title": "BS in Computer Science",
+      "sub": "The University of Faisalabad (TUF) · GPA 3.31/4"
+    },
+    {
+      "icon": "📘",
+      "date": "2022 — 2024 · Faisalabad",
+      "title": "Intermediate — ICS",
+      "sub": "Aspire College, Kurrianwala · Score 740/1200"
+    },
+    {
+      "icon": "💻",
+      "date": "Harvard (edX) · Online",
+      "title": "CS50x: Introduction to Computer Science",
+      "sub": "Harvard University · Certificate earned"
+    },
+    {
+      "icon": "🐍",
+      "date": "Harvard (edX) · Online",
+      "title": "CS50P: Introduction to Programming with Python",
+      "sub": "Harvard University · Certificate earned"
+    }
   ],
-  projects: [
-    { name: "Django E-Commerce Site", featured: true, desc: "A full e-commerce web application built with Django.", tags: ["Python", "Django", "Full Stack"], url: "https://github.com/myy475855-code/Django-E-COMMERCE-SITE" },
-    { name: "Flask E-Commerce Site", featured: true, desc: "An e-commerce web application built using Python Flask.", tags: ["Python", "Flask", "Full Stack"], url: "https://github.com/myy475855-code/FLASK-ECOMMERCE-SITE" },
-    { name: "LMS in C#", featured: true, desc: "A university Learning Management System built with C# Windows Forms and SQL Server. Teachers can upload lectures, materials, and quizzes, while students can view content and take auto-graded quizzes.", tags: ["C#", "SQL Server"], url: "https://github.com/myy475855-code/lms-in-C-" },
-    { name: "Django Blog App", desc: "A dynamic blog application developed using Django.", tags: ["Python", "Django"], url: "https://github.com/myy475855-code/django-blog-app" },
-    { name: "Django Video Editor", desc: "A Django-based web application for video editing.", tags: ["Python", "Django"], url: "https://github.com/myy475855-code/Django-MYY-VIDEO-EDITOR" },
-    { name: "Django PDF Editor", desc: "A web application for editing and working with PDF documents.", tags: ["Python", "Django"], url: "https://github.com/myy475855-code/django-pdf-editor" },
-    { name: "Face Recognition To-Do", desc: "A task management application integrating face recognition functionality.", tags: ["Python", "AI"], url: "https://github.com/myy475855-code/face-recognization-to-do" },
-    { name: "AI Background Remover", featured: true, desc: "An AI-powered application that removes backgrounds from images.", tags: ["Python", "AI"], url: "https://github.com/myy475855-code/MYY-BGREMOVER" },
-    { name: "Gemini API Integration", desc: "An AI application built with Python Flask and the Gemini API.", tags: ["Python", "Flask", "API", "AI"], url: "https://github.com/myy475855-code/Gemini-api-integrations" },
-    { name: "My Simple Chat App", desc: "A Python-based chat application.", tags: ["Python"], url: "https://github.com/myy475855-code/my-simple-chat-app" },
-    { name: "Shop Management System", desc: "A shop management application for managing shop-related operations.", tags: ["Web"], url: "https://github.com/myy475855-code/shop-management-system" },
-    { name: "E-Learning", desc: "An e-learning web application.", tags: ["Web"], url: "https://github.com/myy475855-code/elearning" },
-    { name: "Currency Converter", desc: "A currency converter built using Python Flask and the CurrencyFreaks API.", tags: ["Python", "Flask", "API"], url: "https://github.com/myy475855-code/currency-converter" },
-    { name: "Resume Creator", desc: "A web-based resume creator built with Flask, HTML, CSS, and Bootstrap.", tags: ["Python", "Flask", "Bootstrap"], url: "https://github.com/myy475855-code/flask-resume-creator" },
-    { name: "QR Generator", desc: "A QR code generator application built with Python Flask, HTML, CSS, and Bootstrap.", tags: ["Python", "Flask", "Bootstrap"], url: "https://github.com/myy475855-code/flask-qr-generator" },
-    { name: "Barcode Reader & Generator", desc: "A Flask application for reading and generating barcodes.", tags: ["Python", "Flask"], url: "https://github.com/myy475855-code/flask-barcode" },
-    { name: "Weather App", desc: "A weather web application built with Flask.", tags: ["Python", "Flask", "API"], url: "https://github.com/myy475855-code/flask-weather-app" },
-    { name: "Google Login & Signup", featured: true, desc: "A Flask authentication application with Google Login API integration.", tags: ["Python", "Flask", "OAuth"], url: "https://github.com/myy475855-code/google-login-and-signup-form" },
-    { name: "MYY Todo", desc: "A task management application built using Python Flask.", tags: ["Python", "Flask"], url: "https://github.com/myy475855-code/MYY-Todo" },
-    { name: "PPTX Merger", desc: "A utility that merges between 2 and 10 PowerPoint PPTX files.", tags: ["Python"], url: "https://github.com/myy475855-code/pptx-merger" },
-    { name: "Python Duplicate Scanner", desc: "A Python application for detecting duplicate files.", tags: ["Python"], url: "https://github.com/myy475855-code/python-duplicate-scanner" },
-    { name: "Python Video & Photo Separator", desc: "A Python utility that separates photos and videos.", tags: ["Python"], url: "https://github.com/myy475855-code/python-video-and-photo-separator" },
-    { name: "Flask Digital Clock", desc: "A digital clock application built with Flask, HTML, CSS, JavaScript, and Bootstrap.", tags: ["Python", "Flask", "JavaScript", "Bootstrap"], url: "https://github.com/myy475855-code/flask_digital_clock" },
-    { name: "Snake Game Flask", desc: "A browser-based Snake game implemented with Flask and JavaScript.", tags: ["Python", "Flask", "JavaScript"], url: "https://github.com/myy475855-code/snake-game-flask" }
+  "projects": [
+    {
+      "name": "Django E-Commerce Site",
+      "featured": true,
+      "desc": "A full e-commerce web application built with Django.",
+      "tags": [
+        "Python",
+        "Django",
+        "Full Stack"
+      ],
+      "url": "https://github.com/myy475855-code/Django-E-COMMERCE-SITE"
+    },
+    {
+      "name": "Flask E-Commerce Site",
+      "featured": true,
+      "desc": "An e-commerce web application built using Python Flask.",
+      "tags": [
+        "Python",
+        "Flask",
+        "Full Stack"
+      ],
+      "url": "https://github.com/myy475855-code/FLASK-ECOMMERCE-SITE"
+    },
+    {
+      "name": "LMS in C#",
+      "featured": true,
+      "desc": "A university Learning Management System built with C# Windows Forms and SQL Server. Teachers can upload lectures, materials, and quizzes, while students can view content and take auto-graded quizzes.",
+      "tags": [
+        "C#",
+        "SQL Server"
+      ],
+      "url": "https://github.com/myy475855-code/lms-in-C-"
+    },
+    {
+      "name": "Django Blog App",
+      "desc": "A dynamic blog application developed using Django.",
+      "tags": [
+        "Python",
+        "Django"
+      ],
+      "url": "https://github.com/myy475855-code/django-blog-app"
+    },
+    {
+      "name": "Django Video Editor",
+      "desc": "A Django-based web application for video editing.",
+      "tags": [
+        "Python",
+        "Django"
+      ],
+      "url": "https://github.com/myy475855-code/Django-MYY-VIDEO-EDITOR"
+    },
+    {
+      "name": "Django PDF Editor",
+      "desc": "A web application for editing and working with PDF documents.",
+      "tags": [
+        "Python",
+        "Django"
+      ],
+      "url": "https://github.com/myy475855-code/django-pdf-editor"
+    },
+    {
+      "name": "Face Recognition To-Do",
+      "desc": "A task management application integrating face recognition functionality.",
+      "tags": [
+        "Python",
+        "AI"
+      ],
+      "url": "https://github.com/myy475855-code/face-recognization-to-do"
+    },
+    {
+      "name": "AI Background Remover",
+      "featured": true,
+      "desc": "An AI-powered application that removes backgrounds from images.",
+      "tags": [
+        "Python",
+        "AI"
+      ],
+      "url": "https://github.com/myy475855-code/MYY-BGREMOVER"
+    },
+    {
+      "name": "Gemini API Integration",
+      "desc": "An AI application built with Python Flask and the Gemini API.",
+      "tags": [
+        "Python",
+        "Flask",
+        "API",
+        "AI"
+      ],
+      "url": "https://github.com/myy475855-code/Gemini-api-integrations"
+    },
+    {
+      "name": "My Simple Chat App",
+      "desc": "A Python-based chat application.",
+      "tags": [
+        "Python"
+      ],
+      "url": "https://github.com/myy475855-code/my-simple-chat-app"
+    },
+    {
+      "name": "Shop Management System",
+      "desc": "A shop management application for managing shop-related operations.",
+      "tags": [
+        "Web"
+      ],
+      "url": "https://github.com/myy475855-code/shop-management-system"
+    },
+    {
+      "name": "E-Learning",
+      "desc": "An e-learning web application.",
+      "tags": [
+        "Web"
+      ],
+      "url": "https://github.com/myy475855-code/elearning"
+    },
+    {
+      "name": "Currency Converter",
+      "desc": "A currency converter built using Python Flask and the CurrencyFreaks API.",
+      "tags": [
+        "Python",
+        "Flask",
+        "API"
+      ],
+      "url": "https://github.com/myy475855-code/currency-converter"
+    },
+    {
+      "name": "Resume Creator",
+      "desc": "A web-based resume creator built with Flask, HTML, CSS, and Bootstrap.",
+      "tags": [
+        "Python",
+        "Flask",
+        "Bootstrap"
+      ],
+      "url": "https://github.com/myy475855-code/flask-resume-creator"
+    },
+    {
+      "name": "QR Generator",
+      "desc": "A QR code generator application built with Python Flask, HTML, CSS, and Bootstrap.",
+      "tags": [
+        "Python",
+        "Flask",
+        "Bootstrap"
+      ],
+      "url": "https://github.com/myy475855-code/flask-qr-generator"
+    },
+    {
+      "name": "Barcode Reader & Generator",
+      "desc": "A Flask application for reading and generating barcodes.",
+      "tags": [
+        "Python",
+        "Flask"
+      ],
+      "url": "https://github.com/myy475855-code/flask-barcode"
+    },
+    {
+      "name": "Weather App",
+      "desc": "A weather web application built with Flask.",
+      "tags": [
+        "Python",
+        "Flask",
+        "API"
+      ],
+      "url": "https://github.com/myy475855-code/flask-weather-app"
+    },
+    {
+      "name": "Google Login & Signup",
+      "featured": true,
+      "desc": "A Flask authentication application with Google Login API integration.",
+      "tags": [
+        "Python",
+        "Flask",
+        "OAuth"
+      ],
+      "url": "https://github.com/myy475855-code/google-login-and-signup-form"
+    },
+    {
+      "name": "MYY Todo",
+      "desc": "A task management application built using Python Flask.",
+      "tags": [
+        "Python",
+        "Flask"
+      ],
+      "url": "https://github.com/myy475855-code/MYY-Todo"
+    },
+    {
+      "name": "PPTX Merger",
+      "desc": "A utility that merges between 2 and 10 PowerPoint PPTX files.",
+      "tags": [
+        "Python"
+      ],
+      "url": "https://github.com/myy475855-code/pptx-merger"
+    },
+    {
+      "name": "Python Duplicate Scanner",
+      "desc": "A Python application for detecting duplicate files.",
+      "tags": [
+        "Python"
+      ],
+      "url": "https://github.com/myy475855-code/python-duplicate-scanner"
+    },
+    {
+      "name": "Python Video & Photo Separator",
+      "desc": "A Python utility that separates photos and videos.",
+      "tags": [
+        "Python"
+      ],
+      "url": "https://github.com/myy475855-code/python-video-and-photo-separator"
+    },
+    {
+      "name": "Flask Digital Clock",
+      "desc": "A digital clock application built with Flask, HTML, CSS, JavaScript, and Bootstrap.",
+      "tags": [
+        "Python",
+        "Flask",
+        "JavaScript",
+        "Bootstrap"
+      ],
+      "url": "https://github.com/myy475855-code/flask_digital_clock"
+    },
+    {
+      "name": "Snake Game Flask",
+      "desc": "A browser-based Snake game implemented with Flask and JavaScript.",
+      "tags": [
+        "Python",
+        "Flask",
+        "JavaScript"
+      ],
+      "url": "https://github.com/myy475855-code/snake-game-flask"
+    }
   ],
-  certs: [
-    { title: "CS50: Introduction to Computer Science", provider: "Harvard (CS50)", url: "https://certificates.cs50.io/7381d1e6-dfbc-4ac9-82d4-372d848698d1.pdf?size=letter" },
-    { title: "CS50's Introduction to Programming with Python", provider: "Harvard (CS50)", url: "https://certificates.cs50.io/b5fb4f18-08bf-4cdd-9fe9-2934640c326c.pdf?size=letter" },
-    { title: "CS50's Introduction to Databases with SQL", provider: "Harvard (CS50)", url: "https://certificates.cs50.io/e4f02f26-46b5-445f-978e-40f96af66e81.pdf?size=letter" },
-    { title: "Claude & Anthropic AI", provider: "Anthropic Academy", url: "https://academy.claude.com/verify/c0c10ac4dceeb405db338982dd71680b" },
-    { title: "Claude & Anthropic AI (Course 2)", provider: "Anthropic Academy", url: "https://academy.claude.com/verify/001b3995f5242dea3b19b83916a94503" },
-    { title: "Flask Python", provider: "Great Learning", url: "https://www.mygreatlearning.com/certificate/MLHMWDSG" },
-    { title: "Python", provider: "Great Learning", url: "https://www.mygreatlearning.com/certificate/RSVLSSJZ" },
-    { title: "Artificial Intelligence", provider: "Great Learning", url: "http://www.mygreatlearning.com/certificate/ISCEWWAU" },
-    { title: "Web Development Internship & Training", provider: "Bug Resolver — 6 months", url: "https://1drv.ms/b/c/5a5c9a5103c9ba44/IQCmJrGI6XWnQL5j7QSWD0hvAbmoU7JGFEhkbXX3YWTgQes?e=xofEdE" }
+  "certs": [
+    {
+      "title": "CS50: Introduction to Computer Science",
+      "provider": "Harvard (CS50)",
+      "url": "https://certificates.cs50.io/7381d1e6-dfbc-4ac9-82d4-372d848698d1.pdf?size=letter"
+    },
+    {
+      "title": "CS50's Introduction to Programming with Python",
+      "provider": "Harvard (CS50)",
+      "url": "https://certificates.cs50.io/b5fb4f18-08bf-4cdd-9fe9-2934640c326c.pdf?size=letter"
+    },
+    {
+      "title": "CS50's Introduction to Databases with SQL",
+      "provider": "Harvard (CS50)",
+      "url": "https://certificates.cs50.io/e4f02f26-46b5-445f-978e-40f96af66e81.pdf?size=letter"
+    },
+    {
+      "title": "Claude & Anthropic AI",
+      "provider": "Anthropic Academy",
+      "url": "https://academy.claude.com/verify/c0c10ac4dceeb405db338982dd71680b"
+    },
+    {
+      "title": "Claude & Anthropic AI (Course 2)",
+      "provider": "Anthropic Academy",
+      "url": "https://academy.claude.com/verify/001b3995f5242dea3b19b83916a94503"
+    },
+    {
+      "title": "Flask Python",
+      "provider": "Great Learning",
+      "url": "https://www.mygreatlearning.com/certificate/MLHMWDSG"
+    },
+    {
+      "title": "Python",
+      "provider": "Great Learning",
+      "url": "https://www.mygreatlearning.com/certificate/RSVLSSJZ"
+    },
+    {
+      "title": "Artificial Intelligence",
+      "provider": "Great Learning",
+      "url": "http://www.mygreatlearning.com/certificate/ISCEWWAU"
+    },
+    {
+      "title": "Web Development Internship & Training",
+      "provider": "Bug Resolver — 6 months",
+      "url": "https://1drv.ms/b/c/5a5c9a5103c9ba44/IQCmJrGI6XWnQL5j7QSWD0hvAbmoU7JGFEhkbXX3YWTgQes?e=xofEdE"
+    }
   ]
 };
+init(SITE_DATA);
+
+function init(DATA) {
 
 /* ---------- RENDER ---------- */
 const tm = ['Python','Flask','Django','C#','C++','JavaScript','REST APIs','OAuth','SQL','Bootstrap'];
 $('marq').innerHTML = [...tm, ...tm].map(t => `<span>${t}</span><span>•</span>`).join('');
 $('serviceGrid').innerHTML = DATA.services.map(g => `<div class="skill-cat"><h3>${g.category}</h3><ul class="mini-list">${g.items.map(s => `<li>${s}</li>`).join('')}</ul></div>`).join('');
 $('skillGrid').innerHTML = DATA.skills.map(g => `<div class="skill-cat"><h3>${g.category}</h3><div class="tags">${g.items.map(s => `<span class="tag">${s}</span>`).join('')}</div></div>`).join('');
-$('expList').innerHTML = DATA.experience.map(t => `<li><span class="tdate">${t.date}</span><div class="ttitle">${t.title}</div><div class="tsub">${t.sub}</div></li>`).join('');
+$('expList').innerHTML = DATA.experience.map(t => `<li><span class="tdate">${t.date}</span><div class="ttitle">${t.title}</div><div class="tsub">${t.sub}</div>${t.url ? `<a class="repo" href="${t.url}" target="_blank" rel="noopener">View certificate ↗</a>` : ''}</li>`).join('');
 $('eduGrid').innerHTML = DATA.education.map(t => `<div class="edu-card"><span class="edu-icon">${t.icon}</span><div><span class="tdate">${t.date}</span><div class="ttitle">${t.title}</div><div class="tsub">${t.sub}</div></div></div>`).join('');
 $('certList').innerHTML = DATA.certs.map(c => `<div class="cert"><div class="ct">${c.title}</div><div class="cp">${c.provider}</div><a href="${c.url}" target="_blank" rel="noopener">View certificate ↗</a></div>`).join('');
 
@@ -583,7 +998,7 @@ form.addEventListener('submit', async e => {
 });
 $('year').textContent = new Date().getFullYear();
 
-/* ---------- WEBGL 3D BACKGROUND (Three.js r128) ---------- */
+/* ---------- WEBGL BACKGROUND: DNA HELIX + TWISTED HEX TOWER (Three.js r128) ---------- */
 (function () {
   function start() {
     const T = window.THREE; if (!T) return;
@@ -591,29 +1006,72 @@ $('year').textContent = new Date().getFullYear();
     const cv = document.createElement('canvas'); cv.id = 'bg3d'; document.body.prepend(cv);
     let rd; try { rd = new T.WebGLRenderer({ canvas: cv, alpha: true, antialias: !mobile }); } catch (e) { cv.remove(); return; }
     rd.setPixelRatio(Math.min(devicePixelRatio || 1, mobile ? 1.5 : 2));
-    const scene = new T.Scene(), cam = new T.PerspectiveCamera(55, 1, .1, 200); cam.position.z = 14;
-    const g = new T.Group(); scene.add(g);
-    const mk = o => new T.MeshBasicMaterial({ wireframe: true, transparent: true, opacity: o });
-    const mA = mk(.4), mB = mk(.5), mC = mk(.55);
-    const ico = new T.Mesh(new T.IcosahedronGeometry(4, 1), mA);
-    const knot = new T.Mesh(new T.TorusKnotGeometry(1.5, .42, mobile ? 70 : 110, 12), mB);
-    const oct = new T.Mesh(new T.OctahedronGeometry(1), mC); oct.position.set(5.2, -3, 1);
-    const cube = new T.Mesh(new T.BoxGeometry(1.3, 1.3, 1.3), mC); cube.position.set(-5, 3.2, -1);
-    g.add(ico, knot, oct, cube);
-    const N = mobile ? 450 : 1000, pos = new Float32Array(N * 3);
-    for (let i = 0; i < N; i++) { pos[i * 3] = (Math.random() - .5) * 44; pos[i * 3 + 1] = (Math.random() - .5) * 60; pos[i * 3 + 2] = (Math.random() - .5) * 34; }
-    const pg = new T.BufferGeometry(); pg.setAttribute('position', new T.BufferAttribute(pos, 3));
-    const pm = new T.PointsMaterial({ size: .09, transparent: true, depthWrite: false });
-    const pts = new T.Points(pg, pm); scene.add(pts);
+    const scene = new T.Scene(), cam = new T.PerspectiveCamera(55, 1, .1, 300); cam.position.z = 16;
+    const root = new T.Group(); scene.add(root);
+
+    /* double helix: two strands + rungs */
+    const STEPS = mobile ? 220 : 340, TURNS = 14, H = 64, R = 4.4, per = STEPS / TURNS;
+    const A = [], B = [];
+    for (let i = 0; i < STEPS; i++) {
+      const a = i / per * Math.PI * 2, y = -i * (H / STEPS), r = R * (1 + .18 * Math.sin(i * .05));
+      A.push(new T.Vector3(Math.cos(a) * r, y, Math.sin(a) * r));
+      B.push(new T.Vector3(Math.cos(a + Math.PI) * r, y, Math.sin(a + Math.PI) * r));
+    }
+    const lm = o => new T.LineBasicMaterial({ transparent: true, opacity: o });
+    const lA = lm(.85), lB = lm(.85), lR = lm(.3), lT = lm(.2);
+    root.add(new T.Line(new T.BufferGeometry().setFromPoints(A), lA));
+    root.add(new T.Line(new T.BufferGeometry().setFromPoints(B), lB));
+    const rung = []; for (let i = 0; i < STEPS; i += 3) rung.push(A[i], B[i]);
+    root.add(new T.LineSegments(new T.BufferGeometry().setFromPoints(rung), lR));
+
+    /* node beads on the strands */
+    const nodes = []; for (let i = 0; i < STEPS; i += 3) nodes.push(A[i], B[i]);
+    const nm = new T.PointsMaterial({ size: .22, transparent: true, depthWrite: false });
+    root.add(new T.Points(new T.BufferGeometry().setFromPoints(nodes), nm));
+
+    /* twisted hexagonal lattice tower wrapped around the helix */
+    const RINGS = mobile ? 9 : 12, GAP = H / (RINGS - 1), TR = 9.5, tower = [];
+    const hex = (k, y) => Array.from({ length: 6 }, (_, j) => {
+      const a = j / 6 * Math.PI * 2 + k * Math.PI / 6;
+      return new T.Vector3(Math.cos(a) * TR, y, Math.sin(a) * TR);
+    });
+    for (let k = 0; k < RINGS; k++) {
+      const y = -k * GAP, p = hex(k, y);
+      for (let j = 0; j < 6; j++) tower.push(p[j], p[(j + 1) % 6]);
+      if (k < RINGS - 1) {
+        const q = hex(k + 1, y - GAP);
+        for (let j = 0; j < 6; j++) { tower.push(p[j], q[j]); tower.push(p[j], q[(j + 5) % 6]); }
+      }
+    }
+    root.add(new T.LineSegments(new T.BufferGeometry().setFromPoints(tower), lT));
+
+    /* energy pulses travelling down the strands */
+    const PN = 10, pp = new Float32Array(PN * 3), pg2 = new T.BufferGeometry();
+    pg2.setAttribute('position', new T.BufferAttribute(pp, 3));
+    const pulseM = new T.PointsMaterial({ size: .55, transparent: true, depthWrite: false });
+    root.add(new T.Points(pg2, pulseM));
+
+    /* ambient dust */
+    const N = mobile ? 350 : 800, pos = new Float32Array(N * 3);
+    for (let i = 0; i < N; i++) { pos[i * 3] = (Math.random() - .5) * 50; pos[i * 3 + 1] = -Math.random() * 74 + 4; pos[i * 3 + 2] = (Math.random() - .5) * 40; }
+    const dg = new T.BufferGeometry(); dg.setAttribute('position', new T.BufferAttribute(pos, 3));
+    const dm = new T.PointsMaterial({ size: .07, transparent: true, depthWrite: false });
+    scene.add(new T.Points(dg, dm));
+
     function colors() {
       const cs = getComputedStyle(document.documentElement), a = cs.getPropertyValue('--accent').trim(), b = cs.getPropertyValue('--accent-2').trim();
       const light = document.documentElement.getAttribute('data-theme') === 'light';
-      mA.color.set(a); mB.color.set(b); mC.color.set(a); pm.color.set(light ? a : '#ffffff');
-      pm.blending = light ? T.NormalBlending : T.AdditiveBlending; pm.opacity = light ? .55 : .75; pm.needsUpdate = true;
-      mA.opacity = light ? .3 : .4;
+      lA.color.set(a); lB.color.set(b); lR.color.set(light ? b : '#8fd0ff'); lT.color.set(a);
+      nm.color.set(light ? b : '#ffffff'); pulseM.color.set(light ? a : '#7ff0ff'); dm.color.set(light ? a : '#ffffff');
+      const add = light ? T.NormalBlending : T.AdditiveBlending;
+      pulseM.blending = add; nm.blending = add; dm.blending = add;
+      dm.opacity = light ? .45 : .6; nm.opacity = light ? .7 : .9; pulseM.opacity = 1;
+      lA.opacity = lB.opacity = light ? .65 : .85; lT.opacity = light ? .16 : .2;
+      [pulseM, nm, dm].forEach(m => m.needsUpdate = true);
     }
     colors();
     new MutationObserver(() => { colors(); draw(0); }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+
     let mx = 0, my = 0, tx = 0, ty = 0;
     addEventListener('pointermove', e => { tx = e.clientX / innerWidth - .5; ty = e.clientY / innerHeight - .5; }, { passive: true });
     addEventListener('deviceorientation', e => { if (e.gamma == null) return; tx = Math.max(-.5, Math.min(.5, e.gamma / 60)); ty = Math.max(-.5, Math.min(.5, (e.beta - 45) / 90)); }, { passive: true });
@@ -621,13 +1079,16 @@ $('year').textContent = new Date().getFullYear();
     function draw(t) {
       mx += (tx - mx) * .05; my += (ty - my) * .05;
       const s = t * .001;
-      ico.rotation.set(s * .15 + prog * 4, s * .2 + mx, 0);
-      knot.rotation.set(s * .3, s * .25 + prog * 6, 0);
-      oct.rotation.set(s * .5, s * .4, 0); cube.rotation.set(s * .35, s * .45, 0);
-      g.position.set(mobile ? 0 : Math.cos(prog * Math.PI * 3) * 5.2, Math.sin(prog * Math.PI * 2) * 2 - prog * 3, mobile ? -6 : 0);
-      g.scale.setScalar(mobile ? .75 : 1);
-      pts.rotation.y = s * .02 + mx * .4;
-      cam.position.set(mx * 3, -prog * 16 - my * 2.5, 14); cam.lookAt(0, -prog * 16, 0);
+      root.rotation.y = s * .12 + prog * 7 + mx * .5;
+      root.position.set(mobile ? 0 : 6.5, 0, mobile ? -9 : -2);
+      root.scale.setScalar(mobile ? .8 : 1);
+      for (let k = 0; k < PN; k++) {
+        const idx = Math.floor((s * 22 * (k % 2 ? 1 : .7) + k * STEPS / PN) % STEPS), v = (k % 2 ? A : B)[idx];
+        pp[k * 3] = v.x; pp[k * 3 + 1] = v.y; pp[k * 3 + 2] = v.z;
+      }
+      pg2.attributes.position.needsUpdate = true;
+      const camY = -2 - prog * (H - 12);
+      cam.position.set(mx * 3, camY - my * 2, 16); cam.lookAt(0, camY, 0);
       rd.render(scene, cam);
     }
     size(); draw(0);
@@ -643,6 +1104,7 @@ $('year').textContent = new Date().getFullYear();
 const CV_BASE64 = "JVBERi0xLjQKJZOMi54gUmVwb3J0TGFiIEdlbmVyYXRlZCBQREYgZG9jdW1lbnQgKG9wZW5zb3VyY2UpCjEgMCBvYmoKPDwKL0YxIDIgMCBSIC9GMiAzIDAgUiAvRjMgNCAwIFIKPj4KZW5kb2JqCjIgMCBvYmoKPDwKL0Jhc2VGb250IC9IZWx2ZXRpY2EgL0VuY29kaW5nIC9XaW5BbnNpRW5jb2RpbmcgL05hbWUgL0YxIC9TdWJ0eXBlIC9UeXBlMSAvVHlwZSAvRm9udAo+PgplbmRvYmoKMyAwIG9iago8PAovQmFzZUZvbnQgL0hlbHZldGljYS1Cb2xkIC9FbmNvZGluZyAvV2luQW5zaUVuY29kaW5nIC9OYW1lIC9GMiAvU3VidHlwZSAvVHlwZTEgL1R5cGUgL0ZvbnQKPj4KZW5kb2JqCjQgMCBvYmoKPDwKL0Jhc2VGb250IC9IZWx2ZXRpY2EtT2JsaXF1ZSAvRW5jb2RpbmcgL1dpbkFuc2lFbmNvZGluZyAvTmFtZSAvRjMgL1N1YnR5cGUgL1R5cGUxIC9UeXBlIC9Gb250Cj4+CmVuZG9iago1IDAgb2JqCjw8Ci9Db250ZW50cyAxMCAwIFIgL01lZGlhQm94IFsgMCAwIDYxMiA3OTIgXSAvUGFyZW50IDkgMCBSIC9SZXNvdXJjZXMgPDwKL0ZvbnQgMSAwIFIgL1Byb2NTZXQgWyAvUERGIC9UZXh0IC9JbWFnZUIgL0ltYWdlQyAvSW1hZ2VJIF0KPj4gL1JvdGF0ZSAwIC9UcmFucyA8PAoKPj4gCiAgL1R5cGUgL1BhZ2UKPj4KZW5kb2JqCjYgMCBvYmoKPDwKL0NvbnRlbnRzIDExIDAgUiAvTWVkaWFCb3ggWyAwIDAgNjEyIDc5MiBdIC9QYXJlbnQgOSAwIFIgL1Jlc291cmNlcyA8PAovRm9udCAxIDAgUiAvUHJvY1NldCBbIC9QREYgL1RleHQgL0ltYWdlQiAvSW1hZ2VDIC9JbWFnZUkgXQo+PiAvUm90YXRlIDAgL1RyYW5zIDw8Cgo+PiAKICAvVHlwZSAvUGFnZQo+PgplbmRvYmoKNyAwIG9iago8PAovUGFnZU1vZGUgL1VzZU5vbmUgL1BhZ2VzIDkgMCBSIC9UeXBlIC9DYXRhbG9nCj4+CmVuZG9iago4IDAgb2JqCjw8Ci9BdXRob3IgKFwoYW5vbnltb3VzXCkpIC9DcmVhdGlvbkRhdGUgKEQ6MjAyNjEwMDQxMzQyNTArMDAnMDAnKSAvQ3JlYXRvciAoXCh1bnNwZWNpZmllZFwpKSAvS2V5d29yZHMgKCkgL01vZERhdGUgKEQ6MjAyNjEwMDQxMzQyNTArMDAnMDAnKSAvUHJvZHVjZXIgKFJlcG9ydExhYiBQREYgTGlicmFyeSAtIFwob3BlbnNvdXJjZVwpKSAKICAvU3ViamVjdCAoXCh1bnNwZWNpZmllZFwpKSAvVGl0bGUgKFwoYW5vbnltb3VzXCkpIC9UcmFwcGVkIC9GYWxzZQo+PgplbmRvYmoKOSAwIG9iago8PAovQ291bnQgMiAvS2lkcyBbIDUgMCBSIDYgMCBSIF0gL1R5cGUgL1BhZ2VzCj4+CmVuZG9iagoxMCAwIG9iago8PAovRmlsdGVyIFsgL0FTQ0lJODVEZWNvZGUgL0ZsYXRlRGVjb2RlIF0gL0xlbmd0aCAyMTUyCj4+CnN0cmVhbQpHYXVITGdOKSI9JjpPOlNGT2FFJ1NKWW5ea2FuXWsoYFgvcUxkYTRrLl9ncWkhIytcOGw9LE9gaGsjckFeMGswUlBxQiFJNkROZGRca2kobSRpcUE1NyIlaVVKOmUwcCVnYGRTUDhPcDExTFk7NEs/O0VSNC88ZC9nNnRgIU8rUWNAPTdEJjlEPGRLKEJVIWJNbVhqU0dQWlNFa286Nl8qblNHRmNYI1slUFRvMWlZTFk3Ryc+dHApQWVlV0M+T1pwIT4+ZDE8WCY8WEhQNC88J3VeYS1jRy1yOik5PiZvTVZQQERBJkxeIThtLjVFZjYrIlMmcEheT19hYVRsUDwudDZuJzBlK0NZazllPVgkNyhgTDF0VS89ViEvZjlFIiVGK0c1Rms8Lzk3PjY1OD87UEVxJlpFaSxLN3E/cyYoKmhRbEFcKjpka2QtOzBwb00uP3UqaWIyOyIxIktIM2J1Si42QzctLEwmLjtBaF8kbGFRPU5FKnRkIipwYCZtPExoIStnNkdLJWB1cSRRcldUOVpNMCpsYFlUUDcmV2hEQlxUYVNONCkjLE4jIVNUb3NQPHRNZ1NCLGFwSWUtOFw8RnNpKi1EaFxhUDdzXj5hXiJlUz9BY08vZVJpPSI3ZmY6VV9tLSlCTzFeWGZxSzNBbTFYXzspLG4xUHBqKytaY20lY0hjUENJPiQ0aWQtdW5bOGNkLj9AajIlSyZndDREZ1hicnQ7Xl5VZUtdVkUkN1VLXyVWKlhyLTBYcE84XS5UXl9KXm5TRV8wWUJeKTQ+c2IzXHNjXHBZJ1cyQkpiaHUyL19tN1ZOIm1FOVQkMXNxQTgmRUdvS14mbC0haD5sPk5INU8oaU5lQS9rdD1jYmBYLls9PiNhUjZrJipVXi5ANW5vXzgoS2xdMk1hNl5EIyNpLmJUKjpzS1gyaklLSFpwYVUjOWombmtpYmBaK1hfbHVpKEdWM0lOO14iayskaD8uakFmOyksK1VBNi9POzlKVyZJKjhUT24jZT9QPj9kTFYkcjR1SC1PdUA6ND5Dci1kV2ZubjdSVF83X2ptRE0rUmhwUChYUjMpKUNZbU1FK2xuNlNWUmNkKEshUGFFJzM7TTVBZlQlSz1TRW1vcWhYbSNHT3M4UGkqXVxfdDI7MEFgYi9qbGVFMyR1LSYtKDJxU244VTtcXmpHUGlEanBObS0qXD9mR1hHW2BFZSlWbUtrKl9ZP0RfPUJ1NixyTGlIWDtfdTlsJV9cLjA5PyJVWjVrIUpPKXBFWGwjdClfYVgpWi88bzsuOjZzPW9pJSkzIjopXDE3OiQqblUqZCU8TTdJNCdANEoja11iOHQ/UXMqRUo5MUs4OSVxS0VYIW4hNiJBTEIjYGBqOzxJRklLcidDQ1pcRGtaLTtObTRvRUZdSC4lN3IsZnFka2ZzMVc5U1MyVk5qOjllLCFMSFlKOkpzKzYwQjc4Xl9MU1NgTG4ldS8tV3JXL1xiYmF0LnAkYjluMnIjR1Y3PipiNzdsJlBBOTVvYi5hcWBva2QsYl5IRGNxYjJkayVsVypeR0IlXDMzTEkqbUowRDZDNE8iXWtSKWxaR0cuIWs2QlwuKUU2cjBlKlY3Tj1lcGpFIyxEW0c7I0k2LkJZRic8XilkKFclRSxMRGlrYmNLTmo7Zko/bysnPzZEMUIjKVtKWmclITVNIUxvS1JXQkI3SC1tRD5HTmlTPlkyOThSTiMpUXRqVl9yMyZcSFg3WTZfOS1bciVfIzshcF4pP0k0P2ooOGo3dFxPR1VJMzAzRis1TCZ0VCgjJkpEMGBfblxoQjA4LXElOFFkMGcsNmRTSVVCXiEzNnAobjY4ZDtYJlRvXGM7c289MW8nbTlcWS5RajMoPnRgVXMlUV5ANXVAZmA3QG9EKjQ6RTBKW11OJi1RKk1QWi10QnNGK0o+LkBaPGJEJEk1clVeX0YmSFxKbydwYlpnaF46Z1tzZSlUUDRYOF9WM1NYKmFmQUNfYj49W3FsIV9JVEJfXDA8P1xWWTtbIiQsJ0E1WFE0MSxyPUFgOjEmTHA2NXE9KFUtQ2MjNTNZaE9xXD8lJixhOCw/MEFIJ0RBZ0ZlP1pmRlgiPGFTPl9gIUdSKTpyMVA0OD0pRDwobThuWyouZWlJP11nREo1aVIjXUgvTGdpblFdaCQ/Ql1cQSwha2l1VmhAWXVHX2BWRkFFWU9OVls8QkZtWGpXUzEsOzNXLklzOWgmY245bC9CZDt1PHRYPi9qNEVNTkApb15tPyJDcW4mOiQkcisjM25ITCIvKCooJy0hZ1RDN0hqLlhZUTYoJjsyPksvS3JLWWcxPDonSkJKX0s0aDBkYUVbTGAxNGhtWF8mTEFEXzInVCVbRDxnL2g5bVEtMGFNIkJNOVFVSVk3ZV0uJ2FUajUwKDo/RkNRSjtbWXJWYSolMk5PZiFgTDJzQS00RHRMZCQyVklPcEFZOC5RcUVDVWFyXUZsUlxtJUpkVjsjYV9kOmBAIl8+LlV1KjBwP1xqMTcwMG11Oig0VmFqSDhkKDFkO1NtKT02OnBUS0gmQi5zKl9xbEJjM0pzWTlaKWImU0NXWi4hMzAkJDxwXiMzOixGJD9NTlpWKm9udVtpRSVENzdtbWFkVElbSzU6TmJmZUowV25EZVBEU3QrMTU/YytAZmxBUmxcNWRvNkE1XSciWzBBWCU3RE5LaChYKUVEVjNqU2Y8OHRPX2NdZVNxPXU/O1llI2c7THFaKFgrL2xMSz47LHMycExYcFYlYzg5W2RFQ1o/Yy5KQT0zYlpQaUNnLzZrOGgvWTlhImNbKiRTS2JgXUdHJkNwRTJQOlNYWTpJXDolPEtBKnBpZTAkdVRMMH4+ZW5kc3RyZWFtCmVuZG9iagoxMSAwIG9iago8PAovRmlsdGVyIFsgL0FTQ0lJODVEZWNvZGUgL0ZsYXRlRGVjb2RlIF0gL0xlbmd0aCAxODYxCj4+CnN0cmVhbQpHYXUwRUQvXC0hJkg4OC4waUZocl1iVkQnKWs2Xi8sYyQ5aTdraFZfVjBsRzRgR0IlMmg9V2dicnFgK2xHdGVUUWlYLiwiZWlQdD40Uy0vSjpyZW9vczdJUmRjNThiPEZPMUk2Okktb3MnPzVJMSkuMzxTZCRJT3NRSV4vWlxkPmgkXmgjMTkyO0clMyJaPFkmTiRCJTEyOlo6YmNJJEdTOkdfWkVaZ01ZQzJcIk5LNVFsJyFXN3M0WFVEKC83Y1NYXVM2dDZPSVooclI9Qi5TVSwoXm4yaSgnaj5CKGNIS0EhKEpnLGlBMjU8R2glSidhKVtKMF40LVtSKyMqW2UuSytlI0k+WE5mOG9gKigxc2gyWDdXdXUlL0s2UyRgRGZvcDU0c2wiQDE3a1ZXbyplcnFtQ2ohai46OmdOXSY8MlpzZXQqZ2c9YFRDIktJJkJNTHA1ZkY/Migia3RiP0ZGK1ZfcV1pPihdJS9dQS9jNjY1cWw0VjFVJDZvazBKdChmVTlTLiRWJjJXSmxFKilraFJyMFFKUGUrQCcqZltSQjgpYmM0QFRGTjZvI2dJJjBPSmhvazYyTGlZMCsvaUZnLTk/Z3QlLUhKQjpcUUckMmpEPiMnM3JqZmYuTmE6YCcwTWMsa2chXEtyPTJvaWVlUDRkUF82QkBZaVVxVCMhME4lOElBP0kxMEhpc1pJNS5QJFc3KlcpVFsoPXFFZk8iQHJJYCNoTFJWSjY3aEhJVyJkZD5fJlM3PjdiLT0zSl9fX2BnVEpeWDZAdWFEWE9zRlJFbUtQQWU9PUBWJ2o6JG5KWzkicXU9TFFlZCUmWzlyXW9dJGNEYVlIYjghcCwmZ0MrbT1MQiNFQkhsWFc0XWsvOU5yL1QxLzw6VlEhWXMzMllgUickNyVUaUJGSHQwRy1rOi0mNUxmNCFKbVImKCQuVEUhPTY/RCFNbEgpXnJhSERWdTU2VlxzLnFpITBQSXFZOmlfcHFKQidlLCZSW3VidS5VS1ktRz0hPzk0JVtSVVllUHVjYCZzRWNyUywhXTc7WT11ImgyUC0oS2lWY11yXHBXZlk+WS4ob0JLXD5hLENuTG89JD1NRC8/dG1aXCooY0BvMTJOWSJ1cG1aMFVRP01EX0pcLkAlJE5VZyM4RjdIJWlrRGxYKG5bWSFjRzJbdEBATWxQQjxNSmdsOUgsNUFuSztHU1E9Rjc1ayUxNVlRLGInXVBDVmZvJWA2NVlRUD8ySkxIQU02THM3QHJZXD8nMy1EQyxSRkdUWiojYklhSzdsOTRtNzducl1wMEI5L0YiNU9EW3M9NXArcV4/LlJETktfOUY9XzdVTkpKKCZLOWdkWlc8aF4/PmpQMjlkWzYmR0JyZUonPmBdYitNVXIzXCclQTJjPmxCX0Y2WTFfPSxELipedT80WCtiZChuaixATVEhKlxNMDpDNV1ASVpRS3U/ZEYkRiVYNW8rKGkxRDw/KTNXUUFbLyUnYiYwPzBVYG0tUCcvVXNJWiFuXyZdXTU3ST09TW1sPitaRyRBdF8jTFNvRDc1QVkpJVFRMHUjWmUlVjpYNiI9aTxTMVM6KU4zV2o0OVUvJFk8cm9ba2ZiOVQ0VidjSFs6N1A9LUNjSURgKTFqS0A6cUdyTmk0RnBqOytVM2EuR0w3OGE4SFQ2TnNHV0VjdW4wKmxRIlU6PmMoRFxqPDA0OyJdXFkpKyVEWCpATUpvVFovU04+cVw0WTRwNEZMSCJFNTtMWDJXXjcsMWdwKVlvKzxyR3FTKTdYRjU3PlNLUHVQV2lLOSs2W2JMPmB1WmRYVytENWJeUy8tXSZFNFQnSiVqXWE/cU5POjQpTzJeKD1YciEhPmArLSVyZFdBYCZcXlE9XDNqMmhELko5Yjd1ZHRIPyo3UCNIM3I+RC1EWl1qPmhPTzBGLUxNQSwjNGhkPHJaOiErKGprL1wnYllyI1o/RyNnLTIpSGs1cTk8NmNxUF84cTcmWUpYMVpVLWpyNzVxW04sX1NfTEpbT1Q2cCkiVGQ9Q2VfYj04MCF0NldgUSIvYlU+Wj8zOCNoNXI6TEBkJjhuWGFyV0xTV2RfMT1tTihYWDU5dXBLNUYiJl0pLzdgY3VOIjBQRiRxWDNZbkdFb28oayohLmNNXjMzOWlrM0QvNz1Xb2NqZFBbPCJAWXRYL0VCSVkoWk5xWCdyP0doU3RQcyc5NExFNC1OcFFFWXBsaWNWbDxaKkRSYi46cFRaNjZSPGdzUSpDUCxFdVQ2dFNyKWI+UUg3cXE1SjIwY0NSQGs6J3RcdCdAM09YaShBTG4zcFxxJXBvaW9IJGtEY05jKGRdR0EldWUrNzY1RGNkM2RTbD1kOUtAb2M2Y1pUJzp1NF4mO0k/VmNiMSMqMCcmN1BOMnM3QE10Q3FEKCg4VSIqNllAXWlpZiVXYmQqKUZwbnBEOSw+Z2wsZzM5LWJBR1guTUU6SC8xNGA5PH4+ZW5kc3RyZWFtCmVuZG9iagp4cmVmCjAgMTIKMDAwMDAwMDAwMCA2NTUzNSBmIAowMDAwMDAwMDYxIDAwMDAwIG4gCjAwMDAwMDAxMTIgMDAwMDAgbiAKMDAwMDAwMDIxOSAwMDAwMCBuIAowMDAwMDAwMzMxIDAwMDAwIG4gCjAwMDAwMDA0NDYgMDAwMDAgbiAKMDAwMDAwMDY0MCAwMDAwMCBuIAowMDAwMDAwODM0IDAwMDAwIG4gCjAwMDAwMDA5MDIgMDAwMDAgbiAKMDAwMDAwMTE4MiAwMDAwMCBuIAowMDAwMDAxMjQ3IDAwMDAwIG4gCjAwMDAwMDM0OTEgMDAwMDAgbiAKdHJhaWxlcgo8PAovSUQgCls8ODBhZjE4NWNlZjhlZWUxODI5MTdkNzFmOGJiZGYxOGU+PDgwYWYxODVjZWY4ZWVlMTgyOTE3ZDcxZjhiYmRmMThlPl0KJSBSZXBvcnRMYWIgZ2VuZXJhdGVkIFBERiBkb2N1bWVudCAtLSBkaWdlc3QgKG9wZW5zb3VyY2UpCgovSW5mbyA4IDAgUgovUm9vdCA3IDAgUgovU2l6ZSAxMgo+PgpzdGFydHhyZWYKNTQ0NAolJUVPRgo=";
 const cvUrl = 'data:application/pdf;base64,' + CV_BASE64;
 $('cvBtn').href = cvUrl; $('cvBtn2').href = cvUrl;
+}
 </script>
 </body>
 </html>
