@@ -201,7 +201,7 @@ input:focus,textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 
       <div class="touch-only"><kbd>☀️</kbd> Day / night button</div>
     </div>
     <button class="btn btn-primary" id="enterBtn" type="button">Enter the room ➤</button>
-    <a class="alt" href="index.html">Prefer the classic portfolio? →</a>
+    <a class="alt" href="portfilo.html">Prefer the classic portfolio? →</a>
   </div>
 </div>
 
@@ -223,7 +223,7 @@ input:focus,textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 
   <div class="p-body" id="pBody"></div>
 </aside>
 
-<div class="err-box" id="errBox"><div><h2>3D isn't available here</h2><p>Your browser or device couldn't start WebGL. You can still view the full portfolio in the classic layout.</p><a class="btn btn-primary" href="index.html">Open classic portfolio</a></div></div>
+<div class="err-box" id="errBox"><div><h2>3D isn't available here</h2><p>Your browser or device couldn't start WebGL. You can still view the full portfolio in the classic layout.</p><a class="btn btn-primary" href="portfilo.html">Open classic portfolio</a></div></div>
 
 <script>/**
  * @license
@@ -1162,7 +1162,7 @@ const PANELS = {
   },
   about: {
     eye: '02 · About', title: 'Who I am',
-    html: () => `<p ${I(0)}>I'm a Computer Science student in Faisalabad who taught himself to ship <strong>full products</strong>, not just class assignments — from a quiz-grading LMS in C# to Flask apps wired into real APIs like Gemini and Google OAuth.</p><p ${I(1)}>I completed Harvard's CS50x (Introduction to Computer Science) and CS50P (Introduction to Programming with Python) end to end, working through about 42 small projects and problem sets along the way.</p><p ${I(2)}>What pulls me in is the gap between "it works on my machine" and "it works for a real user." I close that gap by building things end-to-end: interface, backend, database, deploy.</p><div class="grid2" ${I(3)}><div class="fact"><small>Location</small><b>Faisalabad, PK</b></div><div class="fact"><small>Focus</small><b>Full stack web</b></div><div class="fact"><small>Languages</small><b>English · Urdu</b></div><div class="fact"><small>BS CS GPA</small><b>3.31 / 4</b></div></div><div class="row-btns" ${I(4)}><a class="btn btn-ghost btn-sm" href="https://github.com/myy475855-code" target="_blank" rel="noopener">GitHub ↗</a><a class="btn btn-ghost btn-sm" href="https://www.linkedin.com/in/muhammad-yousaf-905532391/" target="_blank" rel="noopener">LinkedIn ↗</a><a class="btn btn-ghost btn-sm" href="https://myy475855-code.github.io/Muhammad-Yousaf" target="_blank" rel="noopener">Website ↗</a></div>`
+    html: () => `<p ${I(0)}>I'm a Computer Science student in Faisalabad who taught himself to ship <strong>full products</strong>, not just class assignments — from a quiz-grading LMS in C# to Flask apps wired into real APIs like Gemini and Google OAuth.</p><p ${I(1)}>I completed Harvard's CS50x (Introduction to Computer Science) and CS50P (Introduction to Programming with Python) end to end, working through about 42 small projects and problem sets along the way.</p><p ${I(2)}>What pulls me in is the gap between "it works on my machine" and "it works for a real user." I close that gap by building things end-to-end: interface, backend, database, deploy.</p><div class="grid2" ${I(3)}><div class="fact"><small>Location</small><b>Faisalabad, PK</b></div><div class="fact"><small>Focus</small><b>Full stack web</b></div><div class="fact"><small>Languages</small><b>English · Urdu</b></div><div class="fact"><small>BS CS GPA</small><b>3.31 / 4</b></div></div><div class="row-btns" ${I(4)}><a class="btn btn-ghost btn-sm" href="https://github.com/myy475855-code" target="_blank" rel="noopener">GitHub ↗</a><a class="btn btn-ghost btn-sm" href="https://www.linkedin.com/in/muhammad-yousaf-905532391/" target="_blank" rel="noopener">LinkedIn ↗</a><a class="btn btn-ghost btn-sm" href="https://myy475855-code.github.io/Portfilo" target="_blank" rel="noopener">Website ↗</a></div>`
   },
   skills: {
     eye: '03 · Skills & services', title: 'Toolbox',
@@ -1238,7 +1238,7 @@ function markVisited(hs) {
   if (n === HS.length) { setTimeout(() => { toast('🏆', 'Portfolio Master — you explored everything!'); if (!reduce) confetti(); }, 900); }
   else setTimeout(() => toast(hs.icon, hs.ach), 700);
 }
-$('dock').innerHTML = `<button class="dk" data-id="tour" type="button" aria-label="Guided tour"><em>T</em><span>🧑‍💻</span>Tour</button>` + HS.map((h, i) => `<button class="dk" data-id="${h.id}" type="button" aria-label="${h.title}"><em>${i + 1}</em><span>${h.icon}</span>${h.title.replace('Download ', '').replace('My ', '')}</button>`).join('') + `<a class="dk" href="index.html" aria-label="Classic view"><span>🗂️</span>Classic</a>`;
+$('dock').innerHTML = `<button class="dk" data-id="tour" type="button" aria-label="Guided tour"><em>T</em><span>🧑‍💻</span>Tour</button>` + HS.map((h, i) => `<button class="dk" data-id="${h.id}" type="button" aria-label="${h.title}"><em>${i + 1}</em><span>${h.icon}</span>${h.title.replace('Download ', '').replace('My ', '')}</button>`).join('') + `<a class="dk" href="portfilo.html" aria-label="Classic view"><span>🗂️</span>Classic</a>`;
 $('dock').addEventListener('click', e => {
   const b = e.target.closest('.dk[data-id]'); if (!b) return;
   const wasPanel = state === 'panel'; if (wasPanel) closePanel();
