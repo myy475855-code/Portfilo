@@ -1,137 +1,93 @@
-# Muhammad Yousaf Yamin — Developer Portfolio
+# Muhammad Yousaf Yamin — Portfolio
 
-A developer portfolio in two versions, all single files with no build step:
+A single-file, dependency-free portfolio website for a Full Stack Developer working with Flask, Django, API integrations and Python automation.
 
-| File | What it is |
-| --- | --- |
-| `index.html` | **3D room.** Walk around an interactive room and explore the portfolio like a mini game. |
-| `portfilo.html` | **Classic site.** A modern, animated one-page portfolio with dark and light themes. |
+Everything (HTML, CSS, JavaScript and content) lives in one file: `Portfilo.html`. There is no build step, no framework and no package install.
 
-**Live site:** https://myy475855-code.github.io/Portfilo
+## Features
 
----
+- Animated intro loader and scroll progress bar
+- Dark and light theme with a toggle (the choice is remembered in the browser)
+- Animated network-style canvas background and aurora glow
+- Typing effect in the hero section
+- Scroll-reveal animations and animated stat counters
+- Sections: Projects, About, Services, Skills, Experience, Education, Certifications, Testimonials, Contact
+- Contact form with success message
+- Custom cursor ring on desktop (hidden on touch devices)
+- Responsive layout for phones, tablets and desktops
+- Respects the "reduce motion" accessibility setting
+- Social link previews (Open Graph and Twitter/X cards) and a favicon
 
-## 3D room (`index.html`)
+## Getting started
 
-Built with Three.js (included in the file, so it works offline).
+1. Download `Portfilo.html`.
+2. Open it in any modern browser (double-click the file).
 
-### Controls
-
-| Action | Desktop | Phone / tablet |
-| --- | --- | --- |
-| Move | `W` `A` `S` `D` or arrow keys (`Shift` to sprint) | Left on-screen stick |
-| Look around | Drag the mouse (or `Q` / `Z` to turn) | Drag the right side of the screen |
-| Interact | Click a glowing marker, or press `E` when near one | Tap a glowing marker |
-| Jump to a spot | Keys `1`–`7`, or the bottom bar | Bottom bar |
-| Guided tour | `T`, or the **Tour** button | **Tour** button in the bottom bar |
-| Day / night | `N`, or the ☀️ / 🌙 button | ☀️ / 🌙 button (top right) |
-| Close a panel | `Esc` or the ✕ button | ✕ button |
-
-### What's in the room
-
-| Spot | Opens |
-| --- | --- |
-| Desk monitor | Projects (featured work and the full filterable list) |
-| CV on the desk | CV download |
-| Bookshelf | Skills and services |
-| Whiteboard | Experience and education |
-| Certificate wall | Certificates, each linking to its verification page |
-| Poster | About me |
-| Door | Contact details and message form |
-
-### Guide character
-
-A low-poly version of you (hoodie with the MYY logo, headphones and glasses) walks in through the door, waves and offers a tour. On the tour he walks to each station, points at it and explains it in a speech bubble, and the camera follows him. Each stop has **Open** (shows the full panel), **Next** and **✕** (end tour) buttons. Outside the tour he wanders between stations on his own, and you can click him to start a tour. His lines are in the `SPOTS` object in `room.html`.
-
-### Day and night
-
-The room has a night mode (neon and dark walls) and a day mode (bright walls, sky and sun through the window). It starts by local time (day from 6:00 to 18:00), and your choice is remembered in the browser.
-
-### Game features
-
-- Logo loader and start screen.
-- Walking guide character with a guided tour and idle wandering.
-- Day / night mode.
-- Collision with furniture and walls.
-- Minimap showing your position and each spot.
-- "Explored X / 7" progress counter, unlock messages, and confetti when you finish.
-- A "Classic" button that links to `portfilo.html`.
-
-If a browser or device can't run WebGL, the page shows a link to the classic site.
-
----
-
-## Classic site (`portfilo.html`)
-
-- Logo loader, animated particle-network background, word-by-word hero reveal and typewriter role line.
-- Featured projects with a cursor spotlight, plus a collapsible list with tag filters.
-- Bento-style About section, services, skills, and an experience timeline that fills as you scroll.
-- Education and certifications, contact section with copy buttons and a form.
-- Dark and light themes (saved in the browser), mobile menu, keyboard focus styles, and reduced-motion support.
-
----
-
-## Run locally
-
-Open either file in a modern browser, or serve the folder:
+To preview it with a local server instead:
 
 ```bash
-python3 -m http.server 8000
-# visit http://localhost:8000/index.html  or  /portfilo.html
+python -m http.server 8000
 ```
 
-Keep all files in the same folder so the links between them work.
+Then visit <http://localhost:8000/Portfilo.html>.
 
-## Deploy on GitHub Pages
+## Customizing the content
 
-1. Put `index.html`, `portfilo.html` and this `README.md` in the root of your repository.
-2. Go to **Settings → Pages**.
-3. Under **Build and deployment**, choose **Deploy from a branch**, select `main` and `/ (root)`, then save.
-4. After a minute or two the site is live at `https://<username>.github.io/<repository>`. The 3D room is the home page and the classic site is at `/portfilo.html`.
+Most of the text on the site is generated from one JavaScript object named `SITE_DATA`, near the bottom of `Portfilo.html`. Edit these keys to update the page:
 
-## Customize
+| Key          | What it controls                          |
+| ------------ | ----------------------------------------- |
+| `services`   | Service cards                             |
+| `skills`     | Skill categories and items                |
+| `experience` | Work experience timeline                  |
+| `education`  | Education and learning path               |
+| `projects`   | Project cards (set `featured` to highlight a project) |
+| `certs`      | Certificates and verification links       |
 
-Content lives in a `SITE_DATA` object inside the script of each file. `portfolio-data.json` is a copy of the same data for reference; the pages do not read it, so edit the HTML files directly (the same change is needed in each).
+The hero text, About section, and contact details are written directly in the HTML above the script.
 
-| Key | What it controls |
-| --- | --- |
-| `projects` | Project cards and lists. `featured: true` shows a project in "Selected work". |
-| `services` | Service cards |
-| `skills` | Skill groups and tags |
-| `experience` | Timeline entries |
-| `education` | Education cards |
-| `certs` | Certificates and their links |
+### Theme colors
 
-Other changes:
+Colors are CSS variables at the top of the `<style>` block (`:root` for dark, `:root[data-theme="light"]` for light). Change `--accent` and `--accent-2` to re-color the whole site.
 
-- **CV:** replace the `CV_BASE64` string in each file with your PDF encoded as base64: `base64 -w 0 your-cv.pdf`.
-- **Colors:** edit the CSS variables at the top (`--accent`, `--accent-2`, `--bg`, and so on).
-- **Typed role lines (classic site):** the `lines` array in the typewriter section.
-- **Room layout (3D room):** furniture and spot positions are set in the scene code of `index.html`.
+### Contact form
 
-## Contact form setup
+The form posts to Formspree. To receive messages:
 
-Both forms need an endpoint to deliver messages directly. Until one is set, submitting opens the visitor's email app instead.
+1. Create a free form at [formspree.io](https://formspree.io).
+2. In `Portfilo.html`, find `FORM_ENDPOINT` and replace `https://formspree.io/f/your-form-id` with your own endpoint.
 
-1. Create a free form at [Formspree](https://formspree.io) (or use EmailJS).
-2. In `index.html` and `portfilo.html`, replace the placeholder:
-   ```js
-   const FORM_ENDPOINT = "https://formspree.io/f/your-form-id";
-   ```
+### Link preview (Open Graph)
 
-## Tech notes
+The `<head>` already includes the title, description, Open Graph and Twitter card tags. Once the site is hosted:
 
-- Plain HTML, CSS and JavaScript; the classic site draws its background with Canvas, the room uses WebGL.
-- Fonts (Manrope, JetBrains Mono) load from Google Fonts; pages still work with fallback fonts if offline.
-- `index.html` is about 1 MB because Three.js, your logo and the CV are embedded.
+1. Create a 1200×630 PNG named `preview.png` and upload it next to the HTML file.
+2. In the `<head>`, uncomment the commented block and replace `YOUR-DOMAIN` with your real domain.
+
+Social platforms need full `https://` URLs for the image and page address, so this step only works after deployment. Platforms cache previews, so use their debugger tools (for example Facebook Sharing Debugger or LinkedIn Post Inspector) to refresh.
+
+## Deployment
+
+Because the site is a single static file, it works on any static host. Rename `Portfilo.html` to `index.html` first so it loads at your root URL.
+
+- **GitHub Pages:** push to a repository, then enable Pages in Settings.
+- **Netlify or Vercel:** drag and drop the folder, or connect the repository.
+- **Cloudflare Pages:** connect the repository, with no build command.
+
+## Tech
+
+- HTML5, CSS3 (custom properties, grid, flexbox)
+- Vanilla JavaScript (IntersectionObserver, Canvas API)
+- Google Fonts: Manrope and JetBrains Mono (loaded from the web, with system fallbacks)
+
+## Browser support
+
+Current versions of Chrome, Edge, Firefox and Safari.
 
 ## Contact
 
-- Email: myy475855@gmail.com
 - GitHub: [myy475855-code](https://github.com/myy475855-code)
-- LinkedIn: [muhammad-yousaf](https://www.linkedin.com/in/muhammad-yousaf-905532391/)
-- WhatsApp: [+92 326 5511189](https://wa.me/923265511189)
 
 ## License
 
-© Muhammad Yousaf Yamin. All rights reserved. Please don't copy the content, projects or branding without permission.
+All rights reserved unless you add a license. If you want others to reuse the code, consider adding an open-source license such as MIT.
