@@ -62,7 +62,7 @@ The form posts to Formspree. To receive messages:
 The `<head>` already includes the title, description, Open Graph and Twitter card tags. Once the site is hosted:
 
 1. Create a 1200×630 PNG named `preview.png` and upload it next to the HTML file.
-2. In the `<head>`, uncomment the commented block and replace `YOUR-DOMAIN` with your real domain.
+2. In the `<head>`, uncomment the commented block and replace `muhammadyousaf.online` with your real domain.
 
 Social platforms need full `https://` URLs for the image and page address, so this step only works after deployment. Platforms cache previews, so use their debugger tools (for example Facebook Sharing Debugger or LinkedIn Post Inspector) to refresh.
 
