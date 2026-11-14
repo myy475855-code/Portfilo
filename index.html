@@ -5,8 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Muhammad Yousaf Yamin — Full Stack Flask &amp; Django Developer</title>
 <meta name="description" content="Muhammad Yousaf Yamin is a Full Stack Python developer building Flask and Django web apps, REST API integrations and automation. View projects, skills and certifications, or hire him.">
-<meta name="keywords" content="Muhammad Yousaf Yamin, Full Stack Developer, Flask developer, Django developer, Python developer, API integration, Python automation, web developer portfolio">
+<meta name="keywords" content="Muhammad Yousaf Yamin, Full Stack Developer, Flask developer, Django developer, Python developer, freelance web developer, hire Django developer, hire Flask developer, REST API developer, API integration, Python automation, web scraping, e-commerce Django, web developer portfolio">
 <meta name="author" content="Muhammad Yousaf Yamin">
+<meta name="application-name" content="Muhammad Yousaf Yamin">
+<meta name="format-detection" content="telephone=no">
+<link rel="me" href="https://github.com/myy475855-code">
+<link rel="me" href="https://www.linkedin.com/in/myy475855/">
 <meta name="theme-color" content="#07080b">
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
 
@@ -1046,6 +1050,48 @@ const SITE_DATA = {
 init(SITE_DATA);
 
 function init(DATA) {
+/* SEO: build rich-result structured data from the same data that renders the page */
+try {
+  const base = 'https://muhammadyousaf.online/';
+  const ld = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'ProfessionalService',
+        name: 'Muhammad Yousaf Yamin — Full Stack Development',
+        url: base,
+        image: base + 'preview.png',
+        description: 'Freelance Full Stack Python development: Flask and Django web apps, REST API integrations and automation.',
+        provider: { '@type': 'Person', name: 'Muhammad Yousaf Yamin', url: base },
+        makesOffer: DATA.services.map(g => ({
+          '@type': 'Offer',
+          itemOffered: { '@type': 'Service', name: g.category, description: g.items.join(', ') }
+        }))
+      },
+      {
+        '@type': 'ItemList',
+        name: 'Projects by Muhammad Yousaf Yamin',
+        itemListElement: DATA.projects.map((p, i) => ({
+          '@type': 'ListItem',
+          position: i + 1,
+          item: {
+            '@type': 'SoftwareSourceCode',
+            name: p.name,
+            description: p.desc,
+            codeRepository: p.url,
+            programmingLanguage: (p.tags || []).filter(t => /python|javascript|html|css|php|java/i.test(t)),
+            keywords: (p.tags || []).join(', '),
+            author: { '@type': 'Person', name: 'Muhammad Yousaf Yamin', url: base }
+          }
+        }))
+      }
+    ]
+  };
+  const tag = document.createElement('script');
+  tag.type = 'application/ld+json';
+  tag.textContent = JSON.stringify(ld);
+  document.head.appendChild(tag);
+} catch (e) { /* SEO data is optional; never break the page */ }
 const pad = n => String(n + 1).padStart(2, '0');
 
 /* ---------- RENDER ---------- */
